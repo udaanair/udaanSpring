@@ -80,7 +80,7 @@ public class BookingAndSeatSelectionServiceImpl implements BookingAndSeatSelecti
 		aslc.setAvailableSeats(availableSeats);
 		return aslc;
 	}
-
+//kISS property
 	@Override
 	public ResultOfBooking addBookingDetails(BookingRecord br) {
 		ResultOfBooking rob=new ResultOfBooking();

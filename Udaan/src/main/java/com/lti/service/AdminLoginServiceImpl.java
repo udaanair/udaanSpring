@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lti.dao.AdminDAO;
 import com.lti.dto.AdminLoginDetails;
 import com.lti.dto.AdminLoginResult;
+import com.lti.dto.FlightIdForCancellation;
+import com.lti.dto.Status;
 
 @Service
 @Transactional
@@ -32,6 +34,14 @@ public class AdminLoginServiceImpl implements AdminLoginService{
 			result.setUserName(ald.getUserName());
 		}
 		return result;
+	}
+
+	@Override
+	public Status cancelFlightAndUpdateInCustomerBooking(FlightIdForCancellation fifc) {
+		ad.cancelFlight(fifc.getFlightId());
+		Status st=new Status();
+		st.setStatus("Flight deleted successfully and refund initiated");
+		return st;
 	}
 
 	

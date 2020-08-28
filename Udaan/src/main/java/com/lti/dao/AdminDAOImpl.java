@@ -40,4 +40,19 @@ public class AdminDAOImpl implements AdminDAO{
 		return null;
 	}
 
+	@Override
+	@Transactional
+	public void cancelFlight(int flight_id) {
+		String query1="update Flights f set f.status='cancelled' where f.flightId= :f1";
+		String query2="update BookingRecord b set b.refundAmount=b.bookingAmount where b.flightId= :f2";
+		String query3="update CustomerBookingRecord c set c.status='cancelled' where c.bookingPnr.pnr in "
+				+ "(select b.pnr from BookingRecord b where b.flightId= :f3)";
+		
+		int flightsUpdatedRow=entityManager.createQuery(query1).setParameter("f1", flight_id).executeUpdate();
+		int bookingUpdatedRow=entityManager.createQuery(query2).setParameter("f2", flight_id).executeUpdate();
+		int customerUpdatedRow=entityManager.createQuery(query3).setParameter("f3", flight_id).executeUpdate();
+		System.out.println(flightsUpdatedRow+"  "+bookingUpdatedRow+" "+customerUpdatedRow);
+		
+	}
+
 }

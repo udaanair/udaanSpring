@@ -22,16 +22,8 @@ public class FlightsSearchServiceImpl implements FlightsSearchService{
 	@Override
 	public List<Flights> allFlights()
 	{
-		////1600584600000
-		//SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 		List<Flights> li=fdi.getAllFlights();
 		for(Flights fl:li) {
-			/*try {
-				fl.setDepartureSchedule(formatter.parse(fl.getDepartureSchedule().toString()));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
 			System.out.println(fl.getDepartureSchedule());
 		}
 		return li;

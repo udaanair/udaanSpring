@@ -16,9 +16,11 @@ import org.springframework.test.annotation.Rollback;
 import com.lti.dao.AdminDAO;
 import com.lti.dao.BookingAndSeatsDAO;
 import com.lti.dao.FlightsDAO;
+import com.lti.dao.UserLoginDAO;
 import com.lti.dto.AdminLoginDetails;
 import com.lti.dto.SearchParameters;
 import com.lti.dto.SeatParameters;
+import com.lti.dto.UserLoginDetails;
 import com.lti.entity.AdminRegistration;
 import com.lti.entity.BookingRecord;
 import com.lti.entity.CustomerBookingRecord;
@@ -38,6 +40,8 @@ class UdaanApplicationTests {
 	@Autowired
 	private AdminDAO ad;
 	
+	@Autowired
+	private UserLoginDAO uld;
 	
 	@Test
 	void contextLoads() throws ParseException {
@@ -116,6 +120,28 @@ class UdaanApplicationTests {
 		{
 			System.out.println("null returned");
 		}
+			
+	}
+	
+	@Test
+	void testForUserLogin()
+	{
+		UserLoginDetails ald=new UserLoginDetails();
+		ald.setUserName(9648557255L);
+		ald.setPassword("0608196");
+		String s=uld.login(ald);
+		if(s==null)
+		{
+			System.out.println("null returned");
+		}
+			
+	}
+	
+	@Test
+	void testForCancelFlight()
+	{
+		
+		ad.cancelFlight(21);
 			
 	}
 }

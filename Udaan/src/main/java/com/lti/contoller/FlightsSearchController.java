@@ -12,17 +12,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lti.dto.AdminLoginDetails;
 import com.lti.dto.AdminLoginResult;
 import com.lti.dto.AvailableSeatsListClass;
+import com.lti.dto.FlightIdForCancellation;
 import com.lti.dto.RegistrationStatus;
 import com.lti.dto.ResultOfBooking;
 import com.lti.dto.SearchParameters;
 import com.lti.dto.SeatParameters;
 import com.lti.dto.Status;
+import com.lti.dto.UserLoginDetails;
+import com.lti.dto.UserLoginResult;
 import com.lti.entity.BookingRecord;
 import com.lti.entity.Flights;
 import com.lti.entity.UserRegistration;
 import com.lti.service.AdminLoginService;
 import com.lti.service.BookingAndSeatSelectionService;
 import com.lti.service.FlightsSearchService;
+import com.lti.service.UserLoginService;
 
 @RestController
 @CrossOrigin
@@ -36,6 +40,11 @@ public class FlightsSearchController {
 	
 	@Autowired
 	private AdminLoginService als;
+	
+	//private AdminLoginServiceImpl try1=new AdminLoginServiceImpl();//using this instead of interface auto-wiring above will give null pointer exception
+	
+	@Autowired
+	private UserLoginService uls;
 	
 	@RequestMapping(path = "/fetchFlights.api", method = RequestMethod.GET , produces = "application/json")
 	public List<Flights> getAllFLights()
@@ -55,7 +64,7 @@ public class FlightsSearchController {
 	public Status Flights(@RequestBody Flights fl) {
 		Status status = new Status();
 		fss.addNewFlight(fl);
-		status.setStatus("Row added successfully");
+		status.setStatus("Flight added successfully");
 		return status;
 	}
 	
@@ -82,6 +91,18 @@ public class FlightsSearchController {
 	public RegistrationStatus userRegistration(@RequestBody UserRegistration ul) {
 		
 		return fss.addUser(ul);
+	}
+	
+	@RequestMapping(path = "/cancelFlight.api", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	public Status cancelFlight(@RequestBody FlightIdForCancellation fifc) {
+		
+		return als.cancelFlightAndUpdateInCustomerBooking(fifc);
+	}
+	
+	@RequestMapping(path = "/userLogin.api", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	public UserLoginResult userLogin(@RequestBody UserLoginDetails uld)
+	{
+		return uls.userLoginService(uld);
 	}
 }
 

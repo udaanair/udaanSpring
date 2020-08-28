@@ -22,8 +22,6 @@ public class FlightsDAOImpl implements FlightsDAO
 	@PersistenceContext	//@Autowired does not work for injecting EntityManager
 	private EntityManager entityManager;
 
-
-	
 	
 	@Override
 	public void addNewFlight(Flights fl) {
@@ -37,6 +35,7 @@ public class FlightsDAOImpl implements FlightsDAO
 		
 		String queryString = "select f from Flights f where f.economySeatsLeft>= :n1 "
 				+ "and to_char(trunc(f.departureSchedule))= :dt1 and f.source= :s1 and f.destination= :d1 and f.status='running' ";
+		//to_char(truc)--> to_char(depr,"dd-mon-yy")
 		//select * from flight_chart 
 		//where economyseatsleft>=3 
 		//and trunc(DEPARTURESCHEDULE)='20-SEP-20' and source='Lucknow' and destination='Mumbai';
